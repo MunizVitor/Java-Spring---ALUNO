@@ -7,6 +7,7 @@ import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,5 +36,13 @@ public class AlunoController {
     public ResponseEntity cadastrarAluno(@RequestBody AlunoPostDTO alunoCadastrar){
         Aluno aluno = new Aluno(alunoCadastrar);
         return ResponseEntity.status(HttpStatus.OK).body(repository.saveAndFlush(aluno));
+    }
+
+    @DeleteMapping("/{id}/deletar")//em nossa alicação apenas deletamos logicamente os alunos
+    public ResponseEntity inativarAluno(@RequestBody AlunoGetDTO aluno){
+        Aluno alunoInativado = new Aluno();
+        alunoInativado.inativarAluno();
+        repository.saveAndFlush(alunoInativado);
+        return ResponseEntity.status(HttpStatus.OK).body("Aluno 'DELETADO COM SUUCESSO' !!!!");
     }
 }

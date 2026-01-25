@@ -33,7 +33,7 @@ public class Aluno {
     @Column(name = "is_Ativo")
     private boolean isAtivo;
 
-
+    //em nossa alicação apenas deletamos logicamente os aluno
     public void inativarAluno (){
         this.isAtivo = false;
     }
