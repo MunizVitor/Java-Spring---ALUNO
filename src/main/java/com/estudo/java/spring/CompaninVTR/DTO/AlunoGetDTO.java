@@ -2,8 +2,11 @@ package com.estudo.java.spring.CompaninVTR.DTO;
 
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
 
-public record AlunoGetDTO(String nome, Integer idade) {
+import java.util.Optional;
+import java.util.UUID;
+
+public record AlunoGetDTO(UUID id, String nome, Integer idade) {
     public AlunoGetDTO (Aluno aluno){
-        this(aluno.getNome(), aluno.getIdade());
+        this(aluno.getId(), aluno.getNome(), aluno.getIdade());
     }
 }
