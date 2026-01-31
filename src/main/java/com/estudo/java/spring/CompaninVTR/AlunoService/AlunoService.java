@@ -26,4 +26,12 @@ public class AlunoService {
         return new AlunoGetDTO(aluno);
     }
 
+    public String deletarAluno(String id){
+        UUID idConvertido = UUID.fromString(id);
+        Aluno aluno = repository.getById(idConvertido);
+        aluno.inativarAluno();
+        repository.saveAndFlush(aluno);
+        return "Aluno 'DELETADO COM SUUCESSO' !!!!";
+    }
+
 }

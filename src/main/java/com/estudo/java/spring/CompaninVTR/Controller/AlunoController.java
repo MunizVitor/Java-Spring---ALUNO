@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/alunos")
@@ -39,10 +40,7 @@ public class AlunoController {
     }
 
     @DeleteMapping("/{id}/deletar")//em nossa alicação apenas deletamos logicamente os alunos
-    public ResponseEntity inativarAluno(@RequestBody AlunoGetDTO aluno){
-        Aluno alunoInativado = new Aluno();
-        alunoInativado.inativarAluno();
-        repository.saveAndFlush(alunoInativado);
-        return ResponseEntity.status(HttpStatus.OK).body("Aluno 'DELETADO COM SUUCESSO' !!!!");
+    public ResponseEntity inativarAluno(@PathVariable(name = "id") String id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.deletarAluno(id));
     }
 }
