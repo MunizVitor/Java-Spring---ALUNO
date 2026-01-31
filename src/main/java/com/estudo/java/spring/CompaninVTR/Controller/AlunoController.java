@@ -5,6 +5,7 @@ import com.estudo.java.spring.CompaninVTR.DTO.AlunoGetDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoPostDTO;
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
 import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
+import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +30,17 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlunoGetDTO> getd(@PathVariable(name = "id", required = true) String id){
+    public ResponseEntity<AlunoGetDTO> getd(@PathVariable(name = "id", required = true) String id) throws AlunoExceptions {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarAlunoPorId(id));
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity cadastrarAluno(@RequestBody AlunoPostDTO alunoCadastrar){
-        Aluno aluno = new Aluno(alunoCadastrar);
-        return ResponseEntity.status(HttpStatus.OK).body(repository.saveAndFlush(aluno));
+    public ResponseEntity cadastrarAluno(@RequestBody AlunoPostDTO alunoCadastrar) throws AlunoExceptions {
+        return ResponseEntity.status(HttpStatus.OK).body(service.cadastrarAluno(alunoCadastrar));
     }
 
     @DeleteMapping("/{id}/deletar")//em nossa alicação apenas deletamos logicamente os alunos
-    public ResponseEntity inativarAluno(@PathVariable(name = "id") String id){
+    public ResponseEntity inativarAluno(@PathVariable(name = "id") String id) throws AlunoExceptions {
         return ResponseEntity.status(HttpStatus.OK).body(service.deletarAluno(id));
     }
 }
