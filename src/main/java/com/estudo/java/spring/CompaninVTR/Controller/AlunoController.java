@@ -1,9 +1,8 @@
 package com.estudo.java.spring.CompaninVTR.Controller;
 
-import com.estudo.java.spring.CompaninVTR.AlunoService.AlunoService;
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoGetDTO;
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoPostDTO;
-import com.estudo.java.spring.CompaninVTR.Model.Aluno;
+import com.estudo.java.spring.CompaninVTR.Service.AlunoService.AlunoService;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoGetDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoPostDTO;
 import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/api/alunos")
 public class AlunoController {
 
     @Autowired

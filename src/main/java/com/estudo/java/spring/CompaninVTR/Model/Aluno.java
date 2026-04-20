@@ -1,6 +1,6 @@
 package com.estudo.java.spring.CompaninVTR.Model;
 
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoPostDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoPostDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 

@@ -1,4 +1,4 @@
-package com.estudo.java.spring.CompaninVTR.DTO;
+package com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO;
 
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
 

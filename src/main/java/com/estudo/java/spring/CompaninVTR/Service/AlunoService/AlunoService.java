@@ -1,7 +1,7 @@
-package com.estudo.java.spring.CompaninVTR.AlunoService;
+package com.estudo.java.spring.CompaninVTR.Service.AlunoService;
 
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoGetDTO;
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoPostDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoGetDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoPostDTO;
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
 import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
@@ -34,13 +34,11 @@ public class AlunoService {
         }
 
         Optional<Aluno> optionalAluno = repository.findById(idConvertido);
-
         if (optionalAluno.isEmpty()) {
             throw new AlunoExceptions("Aluno não encontrado através do ID: " + id);
         }
 
         Aluno aluno = optionalAluno.get();
-
         if (!aluno.isAtivo()) {
             throw new AlunoExceptions("Aluno inativado: " + id);
         }
