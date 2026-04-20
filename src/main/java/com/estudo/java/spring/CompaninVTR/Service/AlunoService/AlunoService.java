@@ -59,7 +59,9 @@ public class AlunoService {
             throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
         }
 
-        Aluno aluno = new Aluno(alunoCadastro);
+        Aluno aluno = new Aluno();
+        aluno.setNome(alunoCadastro.nome());
+        aluno.setIdade(alunoCadastro.idade());
         return alunoCadastro;
     }
 
@@ -78,7 +80,7 @@ public class AlunoService {
         }
         Aluno aluno = new Aluno();
         BeanUtils.copyProperties(optionalAluno, aluno);
-        aluno.inativarAluno();
+        aluno.inativar();
         repository.saveAndFlush(aluno);
         return "Aluno 'DELETADO COM SUUCESSO' !!!!";
     }

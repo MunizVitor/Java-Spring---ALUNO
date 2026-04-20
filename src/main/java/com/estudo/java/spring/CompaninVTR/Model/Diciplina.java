@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,8 +31,12 @@ public class Diciplina {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "professor_id", nullable = true)//"nulllable" e se a sua regra de negocio possa ter um campo nulo
+    @JoinColumn(name = "professor_id", nullable = true)//"nulllable" e se a sua regra de negocio possa ter um campo null
     private Professor professor;
+
+    @OneToMany
+    @JoinColumn(name = "aluno_id", nullable = true)//"nulllable" e se a sua regra de negocio possa ter um campo null
+    private List<Aluno> aluno;
 
     @CreationTimestamp
     private Instant createdDiciplina = Instant.now();
