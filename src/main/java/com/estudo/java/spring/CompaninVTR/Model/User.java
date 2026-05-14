@@ -17,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class Pessoa {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

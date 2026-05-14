@@ -1,7 +1,6 @@
 package com.estudo.java.spring.CompaninVTR.Model;
 
 import com.estudo.java.spring.CompaninVTR.Model.Role.UserRole;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -13,7 +12,6 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tools.jackson.databind.annotation.EnumNaming;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Professor extends Pessoa implements UserDetails {
+public class Professor extends User implements UserDetails {
 
     @OneToMany(mappedBy = "professor")
     private List<Diciplina> diciplina;
