@@ -1,8 +1,8 @@
 package com.estudo.java.spring.CompaninVTR.Model.Role;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("professor"),
+    USER("aluno");
 
     private String role;
 

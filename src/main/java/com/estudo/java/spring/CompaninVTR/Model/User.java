@@ -17,26 +17,27 @@ import java.util.UUID;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public abstract class User implements IEntityModel {
 
     private String nome;
 
+    private String login;
+
+    private String password;
+
     private int idade;
 
-    @Column(name = "is_Ativo")
-    private boolean isAtivo  = true;
+    @Override
+    public boolean inativar(){
+        return false;
+    }
 
-    @CreationTimestamp
-    private Instant createdPerson;
+    @Override
+    public boolean ativar(){
+        return true;
+    }
 
-    @UpdateTimestamp
-    private Instant updatePerson;
-
-    public void inativar(){ this.isAtivo = false; }
-    public void ativar(){ this.isAtivo = true; }
-
+    public boolean isAtivo() {
+        return this.isAtivo();
+    }
 }

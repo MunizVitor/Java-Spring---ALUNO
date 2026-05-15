@@ -21,7 +21,7 @@ public class TokenService {
         try{
             String token = JWT.create()
                     .withIssuer("faculdade-api")
-                    .withSubject(user.getNome())
+                    .withSubject(user.getLogin())
                     .withClaim("type", user.getClass().getSimpleName())
                     .withExpiresAt(getExpiretion())
                     .sign(ALGORITHM);
