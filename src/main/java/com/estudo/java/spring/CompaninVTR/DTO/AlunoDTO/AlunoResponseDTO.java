@@ -8,4 +8,8 @@ public record AlunoResponseDTO (String nome, Integer idade, String diciplina){
     public AlunoResponseDTO(Aluno aluno, Diciplina diciplina){
         this(aluno.getNome(), aluno.getIdade(), diciplina.getNomeDiciplina());
     }
+
+    public AlunoResponseDTO(Aluno aluno) {
+        this(aluno.getNome(), aluno.getIdade(), aluno.getDiciplina().getNomeDiciplina());
+    }
 }

@@ -1,7 +1,5 @@
 package com.estudo.java.spring.CompaninVTR.Service.AlunoService;
 
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoGetDTO;
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoPostDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
@@ -9,12 +7,10 @@ import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
 import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
 import com.estudo.java.spring.CompaninVTR.Repository.DiciplinaRepository;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,9 +22,9 @@ public class AlunoService implements IAlunoService {
     @Autowired
     DiciplinaRepository dcrepository;
 
-    public List<AlunoGetDTO> buscarTodosAlunos(){
-        List<AlunoGetDTO> listAluno = repository.findByIsAtivoTrue().stream().map(AlunoGetDTO::new).toList();
-        return listAluno;
+    @Override
+    public List getAll() {
+        return repository.findByIsAtivoTrue().stream().map(AlunoResponseDTO::new).toList();
     }
 
     @Override

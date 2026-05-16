@@ -2,12 +2,14 @@ package com.estudo.java.spring.CompaninVTR.Service.AlunoService;
 
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
-import com.estudo.java.spring.CompaninVTR.Repository.IEntityRepository;
 import com.estudo.java.spring.CompaninVTR.Service.IUserService;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public interface IAlunoService extends IUserService<AlunoRequestDTO, AlunoResponseDTO> {
+    public List getAll();
+
     public AlunoResponseDTO save(AlunoRequestDTO dto) throws AlunoExceptions;
 
     public AlunoResponseDTO update(String id, AlunoRequestDTO dto) throws AlunoExceptions;
