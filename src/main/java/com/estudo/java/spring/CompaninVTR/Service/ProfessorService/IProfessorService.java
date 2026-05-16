@@ -1,13 +1,10 @@
-package com.estudo.java.spring.CompaninVTR.Service.AlunoService;
+package com.estudo.java.spring.CompaninVTR.Service.ProfessorService;
 
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
-import com.estudo.java.spring.CompaninVTR.Repository.IEntityRepository;
-import com.estudo.java.spring.CompaninVTR.Service.IUserService;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public interface IAlunoService extends IUserService<AlunoRequestDTO, AlunoResponseDTO> {
+public interface IProfessorService {
     public AlunoResponseDTO save(AlunoRequestDTO dto) throws AlunoExceptions;
 
     public AlunoResponseDTO update(String id, AlunoRequestDTO dto) throws AlunoExceptions;

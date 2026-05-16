@@ -13,7 +13,7 @@ public interface IEntityRepository<T> extends JpaRepository<T, UUID> {
     UserDetails findByLoginAndIsAtivoTrue(String login);
 
     //para pegar apenas os que estao como ativo e nao inativado
-    List<T> findByIsAtivo(boolean isAtivo);
+    List<T> findByIsAtivoTrue();
 
     //para pegar apenas o que estamos passando o id para ser inativo ou atiivo
     Optional<T> findByIdAndIsAtivoTrue(UUID id);
