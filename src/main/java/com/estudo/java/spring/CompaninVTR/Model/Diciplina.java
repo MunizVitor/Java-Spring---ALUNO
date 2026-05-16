@@ -1,5 +1,6 @@
 package com.estudo.java.spring.CompaninVTR.Model;
 
+import com.estudo.java.spring.CompaninVTR.Repository.IEntityRepository;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -22,13 +23,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Diciplina {
+public class Diciplina implements IEntityModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-    private String nome;
+    private String nomeDiciplina;
 
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = true)//"nulllable" e se a sua regra de negocio possa ter um campo null
@@ -43,4 +40,14 @@ public class Diciplina {
 
     @UpdateTimestamp
     private Instant uptatedDiciplina = Instant.now();
+
+    @Override
+    public boolean inativar() {
+        return false;
+    }
+
+    @Override
+    public boolean ativar() {
+        return false;
+    }
 }

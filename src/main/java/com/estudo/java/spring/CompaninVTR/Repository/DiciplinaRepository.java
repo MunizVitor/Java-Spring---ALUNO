@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface DiciplinaRepository extends IEntityRepository<Diciplina> {
+
+    Diciplina findByDescricaoIsAtivoTrue(String diciplina);
 }

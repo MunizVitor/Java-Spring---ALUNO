@@ -2,8 +2,12 @@ package com.estudo.java.spring.CompaninVTR.Service.AlunoService;
 
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoGetDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoPostDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
 import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.DiciplinaRepository;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +18,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AlunoService {
+public class AlunoService implements IAlunoService {
 
     @Autowired
     AlunoRepository repository;
+
+    @Autowired
+    DiciplinaRepository dcrepository;
 
     public List<AlunoGetDTO> buscarTodosAlunos(){
         List<AlunoGetDTO> listAluno = repository.findByIsAtivo(true).stream().map(AlunoGetDTO::new).toList();
@@ -85,4 +92,47 @@ public class AlunoService {
         return "Aluno 'DELETADO COM SUUCESSO' !!!!";
     }
 
+    @Override
+    public AlunoResponseDTO save(AlunoRequestDTO dto) throws AlunoExceptions {
+
+        if (dto.nome() == null || dto.nome().isBlank()) {
+            throw new AlunoExceptions("Nome do aluno é obrigatório");
+        }
+        if (dto.idade() == null || dto.idade() <= 0) {
+            throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
+        }
+        Diciplina diciplina = dcrepository.findByDescricaoIsAtivoTrue(dto.diciplina());
+        Aluno aluno = new Aluno();
+        aluno.setNome(dto.nome());
+        aluno.setIdade(dto.idade());
+        aluno.setDiciplina(diciplina);
+        return new AlunoResponseDTO(dto.nome(), dto.idade(), dto.diciplina());
+    }
+
+    @Override
+    public AlunoResponseDTO update(AlunoRequestDTO dto) throws AlunoExceptions {
+
+        if (dto.nome() == null || dto.nome().isBlank()) {
+            throw new AlunoExceptions("Nome do aluno é obrigatório");
+        }
+        if (dto.idade() == null || dto.idade() <= 0) {
+            throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
+        }
+        Diciplina diciplina = dcrepository.findByDescricaoIsAtivoTrue(dto.diciplina());
+        Aluno aluno = new Aluno();
+        aluno.setNome(dto.nome());
+        aluno.setIdade(dto.idade());
+        aluno.setDiciplina(diciplina);
+        return new AlunoResponseDTO(dto.nome(), dto.idade(), dto.diciplina());
+    }
+
+    @Override
+    public String delete(String id) {
+        return "";
+    }
+
+    @Override
+    public AlunoResponseDTO getById(String id) {
+        return null;
+    }
 }

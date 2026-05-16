@@ -39,12 +39,12 @@ public class Aluno extends User implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return this.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.getLogin();
     }
 
     @Override
