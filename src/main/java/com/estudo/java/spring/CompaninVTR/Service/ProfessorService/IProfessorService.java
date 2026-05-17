@@ -1,16 +1,17 @@
 package com.estudo.java.spring.CompaninVTR.Service.ProfessorService;
 
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
-import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
+import com.estudo.java.spring.CompaninVTR.DTO.ProfessorDTO.ProfessorRequestDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.ProfessorDTO.ProfessorResponseDTO;
+import com.estudo.java.spring.CompaninVTR.Service.IUserService;
+import com.estudo.java.spring.CompaninVTR.exception.ProfessorExceptions;
 
-public interface IProfessorService {
-    public AlunoResponseDTO save(AlunoRequestDTO dto) throws AlunoExceptions;
+public interface IProfessorService extends IUserService<ProfessorRequestDTO, ProfessorResponseDTO> {
+    public ProfessorResponseDTO save(ProfessorRequestDTO dto) throws ProfessorExceptions;
 
-    public AlunoResponseDTO update(String id, AlunoRequestDTO dto) throws AlunoExceptions;
+    public ProfessorResponseDTO update(String id, ProfessorRequestDTO dto) throws ProfessorExceptions;
 
     public String delete(String id);
 
-    public AlunoResponseDTO getById(String id);
+    public ProfessorResponseDTO getById(String id);
 
 }

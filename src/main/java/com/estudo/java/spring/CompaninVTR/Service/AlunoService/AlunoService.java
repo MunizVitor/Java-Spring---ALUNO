@@ -35,7 +35,7 @@ public class AlunoService implements IAlunoService {
         if (dto.idade() == null || dto.idade() <= 0) {
             throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
         }
-        Diciplina diciplina = dcrepository.findByDescricaoIsAtivoTrue(dto.diciplina());
+        Diciplina diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(dto.diciplina()).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplina()));
         Aluno aluno = new Aluno();
         aluno.setNome(dto.nome());
         aluno.setIdade(dto.idade());
@@ -52,7 +52,7 @@ public class AlunoService implements IAlunoService {
         if (dto.nome() == null || dto.nome().isBlank()) throw new AlunoExceptions("Nome do aluno é obrigatório");
         if (dto.idade() == null || dto.idade() <= 0) throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
 
-        Diciplina diciplina = dcrepository.findByDescricaoIsAtivoTrue(dto.diciplina());
+        Diciplina diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(dto.diciplina()).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplina()));
         aluno.setNome(dto.nome());
         aluno.setIdade(dto.idade());
         aluno.setDiciplina(diciplina);

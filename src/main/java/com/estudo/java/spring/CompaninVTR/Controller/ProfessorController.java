@@ -1,26 +1,17 @@
 package com.estudo.java.spring.CompaninVTR.Controller;
 
-import com.estudo.java.spring.CompaninVTR.DTO.ProfessorDTO.ProfessorGetDTO;
-import com.estudo.java.spring.CompaninVTR.DTO.ProfessorDTO.ProfessorPostDTO;
-import com.estudo.java.spring.CompaninVTR.Service.ProfessorService.ProfessorService;
+import com.estudo.java.spring.CompaninVTR.Service.ProfessorService.IProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/professores")
-public class ProfessorController {
+public class ProfessorController extends AbstractUserController {
 
     @Autowired
-    private ProfessorService pfService;
+    private IProfessorService service;
 
-    @PostMapping
-    public ResponseEntity<ProfessorGetDTO> createProfessor(@RequestBody @Validated ProfessorPostDTO dto){
-        return ResponseEntity.status(HttpStatus.OK).body(pfService.createProfessor(dto));
-    }
+    public ProfessorController(IProfessorService service){ super (service); }
+
 }
