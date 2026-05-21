@@ -1,4 +1,4 @@
-package com.estudo.java.spring.CompaninVTR.Controller;
+package com.estudo.java.spring.CompaninVTR.Controller.UsersController;
 
 import com.estudo.java.spring.CompaninVTR.Service.ProfessorService.IProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;

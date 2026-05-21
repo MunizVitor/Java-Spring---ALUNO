@@ -4,6 +4,7 @@ import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
 import com.estudo.java.spring.CompaninVTR.Model.Aluno;
 import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
+import com.estudo.java.spring.CompaninVTR.Model.Role.UserRole;
 import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
 import com.estudo.java.spring.CompaninVTR.Repository.DiciplinaRepository;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
@@ -35,10 +36,11 @@ public class AlunoService implements IAlunoService {
         if (dto.idade() == null || dto.idade() <= 0) {
             throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
         }
-        Diciplina diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(dto.diciplina()).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplina()));
+        var diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(dto.diciplina()).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplina()));
         Aluno aluno = new Aluno();
         aluno.setNome(dto.nome());
         aluno.setIdade(dto.idade());
+        aluno.setRole(UserRole.USER);
         aluno.setDiciplina(diciplina);
         repository.save(aluno);
         return new AlunoResponseDTO(dto.nome(), dto.idade(), dto.diciplina());

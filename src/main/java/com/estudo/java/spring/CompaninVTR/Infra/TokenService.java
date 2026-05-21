@@ -5,19 +5,28 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.estudo.java.spring.CompaninVTR.Model.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Service
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String SECRET;
-    Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
+
 
     public String generetedToken(User user){
+        Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
         try{
             String token = JWT.create()
                     .withIssuer("faculdade-api")
@@ -33,6 +42,7 @@ public class TokenService {
     }
 
     public String validateToken(String token){
+        Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
         try {
             return JWT.require(ALGORITHM)
                     .withIssuer("faculdade-api")

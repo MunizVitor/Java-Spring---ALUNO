@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AlunoRepository extends IEntityRepository<Aluno> {
-
+    Optional<Aluno> findByNomeAndIsAtivoTrue(String nome);
 }

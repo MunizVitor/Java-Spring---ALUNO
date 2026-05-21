@@ -1,4 +1,4 @@
-package com.estudo.java.spring.CompaninVTR.Controller;
+package com.estudo.java.spring.CompaninVTR.Controller.AuthController;
 
 import com.estudo.java.spring.CompaninVTR.DTO.auhtDTO.LoginRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.auhtDTO.LoginResponseDTO;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
