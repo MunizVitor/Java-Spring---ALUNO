@@ -1,5 +1,6 @@
-package com.estudo.java.spring.CompaninVTR.Model;
+package com.estudo.java.spring.CompaninVTR.Model.Users;
 
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
 import com.estudo.java.spring.CompaninVTR.Model.Role.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

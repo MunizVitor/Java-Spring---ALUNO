@@ -1,6 +1,6 @@
 package com.estudo.java.spring.CompaninVTR.Infra;
 
-import com.estudo.java.spring.CompaninVTR.Repository.UserRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Users.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
         if(token != null){
-            var login = tokenService.validateToken(token);
+            var login = tokenService.validadeToken(token);
             UserDetails user = repository.findByLoginAndIsAtivoTrue(login);
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

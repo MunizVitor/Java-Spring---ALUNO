@@ -1,43 +1,80 @@
 package com.estudo.java.spring.CompaninVTR.Controller.DiciplinaController;
 
-import com.estudo.java.spring.CompaninVTR.Service.Diciplina.IDiciplinaService;
-import com.estudo.java.spring.CompaninVTR.Service.IUserService;
-import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
-import com.estudo.java.spring.CompaninVTR.exception.ProfessorExceptions;
+import com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO.DiciplinaRequestDTO;
+import com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO.DiciplinaResponseDTO;
+import com.estudo.java.spring.CompaninVTR.Service.Diciplina.DiciplinaService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class AbstractDiciplinaController<REQUEST, RESPONSE> {
+@RestController
+@RequestMapping("/diciplinas")
+public class AbstractDiciplinaController {
 
     @Autowired
-    protected IDiciplinaService<REQUEST, RESPONSE> service;
+    private DiciplinaService service;
 
     @PostMapping
-    public ResponseEntity<RESPONSE> save(@RequestBody REQUEST dto) {
-        RESPONSE response = service.save(dto);
+    public ResponseEntity<DiciplinaResponseDTO> save(@RequestBody DiciplinaRequestDTO dto) {
+
+        DiciplinaResponseDTO response = service.save(dto);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("id")
-    public ResponseEntity<RESPONSE> getById(@PathVariable(value = "id") String id) {
-        RESPONSE response = service.getById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+    @GetMapping
+    public ResponseEntity<List<DiciplinaResponseDTO>> getAll() {
+
+        List<DiciplinaResponseDTO> response = service.getAllDiciplina();
+
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    public ResponseEntity<List<RESPONSE>> getAll() {
-        List<RESPONSE> response = Collections.singletonList(service.getAll());
+    @GetMapping("/{nomeDiciplina}")
+    public ResponseEntity<List<DiciplinaResponseDTO>> getByName(
+            @PathVariable String nomeDiciplina) {
+
+        List<DiciplinaResponseDTO> response =
+                service.getDiciplinaByNome(nomeDiciplina);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<DiciplinaResponseDTO> getById(
+            @PathVariable String id) {
+
+        DiciplinaResponseDTO response =
+                service.getDiciplinaById(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DiciplinaResponseDTO> update(
+            @PathVariable String id,
+            @RequestBody DiciplinaRequestDTO dto) {
+
+        DiciplinaResponseDTO response =
+                service.updateDiciplina(id, dto);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DiciplinaResponseDTO> delete(
+            @PathVariable String id) {
+
+        DiciplinaResponseDTO response =
+                service.delete(id);
+
         return ResponseEntity.ok(response);
     }
 }

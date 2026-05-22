@@ -1,5 +1,6 @@
-package com.estudo.java.spring.CompaninVTR.Model;
+package com.estudo.java.spring.CompaninVTR.Model.Users;
 
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
 import com.estudo.java.spring.CompaninVTR.Model.Role.UserRole;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

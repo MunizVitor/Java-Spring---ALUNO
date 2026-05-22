@@ -1,5 +1,8 @@
-package com.estudo.java.spring.CompaninVTR.Model;
+package com.estudo.java.spring.CompaninVTR.Model.Diciplina;
 
+import com.estudo.java.spring.CompaninVTR.Model.AbstractEntityModel;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Aluno;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Professor;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;

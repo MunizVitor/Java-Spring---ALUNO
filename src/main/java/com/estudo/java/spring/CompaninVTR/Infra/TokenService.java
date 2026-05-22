@@ -1,16 +1,12 @@
 package com.estudo.java.spring.CompaninVTR.Infra;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTCreator;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.estudo.java.spring.CompaninVTR.Model.User;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.estudo.java.spring.CompaninVTR.Model.Users.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,38 +19,38 @@ import java.time.ZoneOffset;
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String SECRET;
+    @Value("${api.security.token.secret}")
+    private String secret;
 
-
-    public String generetedToken(User user){
-        Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
-        try{
+    public String generateToken(User user){
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);//criacao do tipo de algoritimo que iremos usar para criar
             String token = JWT.create()
-                    .withIssuer("faculdade-api")
+                    .withIssuer("auth-api")
                     .withSubject(user.getLogin())
-                    .withClaim("type", user.getClass().getSimpleName())
-                    .withExpiresAt(getExpiretion())
-                    .sign(ALGORITHM);
-
+                    .withExpiresAt(getExpriretions())
+                    .sign(algorithm);
             return token;
-        } catch (Exception e) {
-            throw new RuntimeException("Erro em criar o token do usuário: " + getClass().toString() + e);
+        } catch (JWTCreationException e){
+            throw  new RuntimeException("Erro while genetated token", e);
         }
     }
 
-    public String validateToken(String token){
-        Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
-        try {
-            return JWT.require(ALGORITHM)
-                    .withIssuer("faculdade-api")
+    public String validadeToken(String token){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("auth-api")
                     .build()
                     .verify(token)
-                    .getSubject();
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+                    .getSubject();//pega o login do usuario que esta usando, o retorno dele e o login verificado realmente
+        }catch (JWTCreationException e){
+            return "";//aqui vai retornar esta string vazia para que no metodo que chamar este vai ter a resposta que o usuario que esta tentando entrar nao vai estar autorizado a entrar
         }
     }
 
-    private Instant getExpiretion(){ return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
-
+    private Instant getExpriretions(){
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        //aqui pegou 2 horas que será o tempo de duração do token e colocou na variavel Instant e nosso timeZone/ZoneOffset que e o Brasil
     }
 }

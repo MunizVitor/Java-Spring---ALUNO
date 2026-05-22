@@ -1,8 +1,6 @@
 package com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO;
 
-import com.estudo.java.spring.CompaninVTR.Model.Aluno;
-import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
-import com.estudo.java.spring.CompaninVTR.Model.Professor;
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
 
 import java.util.List;
 

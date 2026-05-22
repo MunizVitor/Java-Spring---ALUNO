@@ -1,6 +1,7 @@
-package com.estudo.java.spring.CompaninVTR.Model;
+package com.estudo.java.spring.CompaninVTR.Model.Users;
 
 
+import com.estudo.java.spring.CompaninVTR.Model.AbstractEntityModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

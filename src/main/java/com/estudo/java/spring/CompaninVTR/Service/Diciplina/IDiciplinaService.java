@@ -2,13 +2,15 @@ package com.estudo.java.spring.CompaninVTR.Service.Diciplina;
 
 import com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO.DiciplinaRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO.DiciplinaResponseDTO;
-import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
+
+import java.util.List;
+import java.util.UUID;
 
 public interface IDiciplinaService<REQUEST, RESPONSE> {
-    public RESPONSE save(REQUEST dto);
-    public RESPONSE update(String id);
-    public RESPONSE getById(String id);
-    public RESPONSE delete(String id);
-    public RESPONSE getAll();
-
+    RESPONSE save(REQUEST dto);
+    List<RESPONSE> getAllDiciplina();
+    RESPONSE getDiciplinaById(String id);
+    List<RESPONSE> getDiciplinaByNome(String nomeDiciplina);
+    RESPONSE updateDiciplina(String id, REQUEST dto);
+    RESPONSE delete(String id);
 }

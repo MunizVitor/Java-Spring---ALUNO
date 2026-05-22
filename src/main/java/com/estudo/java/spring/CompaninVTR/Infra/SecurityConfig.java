@@ -6,14 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.HttpSecurityDsl;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
 @EnableWebSecurity
@@ -23,33 +22,42 @@ public class SecurityConfig {
     private SecurityFilter securityFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity){
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .anyRequest().authenticated()
+
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
                 .authorizeHttpRequests(authorize -> authorize
+
+                        // LOGIN LIVRE
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+
+                        // PROFESSOR
                         .requestMatchers(HttpMethod.POST, "/alunos/criar").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.POST, "/alunos/alterar").hasRole("PROFESSOR")
+
                         .requestMatchers(HttpMethod.POST, "/professores/criar").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.POST, "/professores/alterar").hasRole("PROFESSOR")
+
                         .requestMatchers(HttpMethod.POST, "/diciplinas/criar").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.POST, "/diciplinas/alterar").hasRole("PROFESSOR")
+
                         .requestMatchers(HttpMethod.GET, "/alunos").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.GET, "/professores").hasRole("PROFESSOR")
                         .requestMatchers(HttpMethod.GET, "/diciplinas").hasRole("PROFESSOR")
-                        .anyRequest()
-                        .authenticated()
-                )
-                .authorizeHttpRequests(authorize -> authorize
+
+                        // ALUNO
                         .requestMatchers(HttpMethod.GET, "/diciplinas").hasRole("ALUNO")
                         .requestMatchers(HttpMethod.GET, "/professores").hasRole("ALUNO")
-                        .anyRequest()
-                        .authenticated()
+
+                        // QUALQUER OUTRA REQUISIÇÃO
+                        .anyRequest().authenticated()
                 )
+
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -60,6 +68,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){ return new BCryptPasswordEncoder(); }
-
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -11,13 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public abstract class AbstractUserController<REQUEST, RESPONSE> {
 
-    @Autowired
-    protected IUserService<REQUEST, RESPONSE> service;
+
+    protected final IUserService<REQUEST, RESPONSE> service;
+
+    public AbstractUserController(IUserService<REQUEST, RESPONSE> service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<RESPONSE> save(@RequestBody REQUEST dto) throws AlunoExceptions, ProfessorExceptions {

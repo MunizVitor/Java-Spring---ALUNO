@@ -2,15 +2,16 @@ package com.estudo.java.spring.CompaninVTR.Service.AlunoService;
 
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
-import com.estudo.java.spring.CompaninVTR.Model.Aluno;
-import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Aluno;
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
 import com.estudo.java.spring.CompaninVTR.Model.Role.UserRole;
-import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
-import com.estudo.java.spring.CompaninVTR.Repository.DiciplinaRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Users.AlunoRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Diciplina.DiciplinaRepository;
 import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,12 +37,12 @@ public class AlunoService implements IAlunoService {
         if (dto.idade() == null || dto.idade() <= 0) {
             throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
         }
-        var diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(dto.diciplina()).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplina()));
+        List diciplina = Collections.singletonList(dcrepository.findByNomeDiciplinaAndIsAtivoTrue(dto.diciplina()).isEmpty());
         Aluno aluno = new Aluno();
         aluno.setNome(dto.nome());
         aluno.setIdade(dto.idade());
         aluno.setRole(UserRole.USER);
-        aluno.setDiciplina(diciplina);
+        aluno.setDiciplina((Diciplina) diciplina);
         repository.save(aluno);
         return new AlunoResponseDTO(dto.nome(), dto.idade(), dto.diciplina());
     }
@@ -54,10 +55,10 @@ public class AlunoService implements IAlunoService {
         if (dto.nome() == null || dto.nome().isBlank()) throw new AlunoExceptions("Nome do aluno é obrigatório");
         if (dto.idade() == null || dto.idade() <= 0) throw new AlunoExceptions("Idade do aluno deve ser maior que zero");
 
-        Diciplina diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(dto.diciplina()).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplina()));
+        List diciplina = dcrepository.findByNomeDiciplinaAndIsAtivoTrue(dto.diciplina());
         aluno.setNome(dto.nome());
         aluno.setIdade(dto.idade());
-        aluno.setDiciplina(diciplina);
+        aluno.setDiciplina((Diciplina) diciplina);
         repository.save(aluno);
         return new AlunoResponseDTO(dto.nome(), dto.idade(), dto.diciplina());
     }

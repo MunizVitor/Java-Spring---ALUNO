@@ -1,14 +1,13 @@
 package com.estudo.java.spring.CompaninVTR.Model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@MappedSuperclass
 public abstract class AbstractEntityModel {
 
     @Id
@@ -21,7 +20,8 @@ public abstract class AbstractEntityModel {
     @UpdateTimestamp
     Instant updatedAt = Instant.now();
 
-    boolean isAtivo = true;
+    @Column(nullable = false)
+    private Boolean isAtivo = true;
 
     public void inativar() {
         isAtivo = false;

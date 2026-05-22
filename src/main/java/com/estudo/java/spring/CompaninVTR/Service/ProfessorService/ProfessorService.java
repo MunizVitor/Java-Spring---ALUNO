@@ -1,15 +1,12 @@
 package com.estudo.java.spring.CompaninVTR.Service.ProfessorService;
 
-import com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO.AlunoResponseDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.ProfessorDTO.ProfessorRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.ProfessorDTO.ProfessorResponseDTO;
-import com.estudo.java.spring.CompaninVTR.Model.Aluno;
-import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
-import com.estudo.java.spring.CompaninVTR.Model.Professor;
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Professor;
 import com.estudo.java.spring.CompaninVTR.Model.Role.UserRole;
-import com.estudo.java.spring.CompaninVTR.Repository.DiciplinaRepository;
-import com.estudo.java.spring.CompaninVTR.Repository.ProfessorRepository;
-import com.estudo.java.spring.CompaninVTR.exception.AlunoExceptions;
+import com.estudo.java.spring.CompaninVTR.Repository.Diciplina.DiciplinaRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Users.ProfessorRepository;
 import com.estudo.java.spring.CompaninVTR.exception.ProfessorExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,16 +29,12 @@ public class ProfessorService implements IProfessorService {
     public ProfessorResponseDTO save(ProfessorRequestDTO dto) {
         var professorExistente = repository.findByNomeAndIsAtivoTrue(dto.nome())
                 .orElseThrow(() -> new RuntimeException("Professor já existente na base de dados: " + dto.nome()));
-        var diciplinasExistente = dcrepository.findByNomeDescricaoIsAtivoTrue(String.valueOf(dto.diciplinas()))
-                .orElseThrow(() -> new RuntimeException("Diciplina não existente na base de dados: " + dto.diciplinas()));
-
+        var diciplinasExistente = dcrepository.findByNomeDiciplinaAndIsAtivoTrue(String.valueOf(dto.diciplinas()));
         Professor professor = new Professor();
         professor.setNome(dto.nome());
         professor.setRole(UserRole.ADMIN);
         professor.setIdade(dto.idade());
-        Diciplina diciplinas = dcrepository.findByNomeDescricaoIsAtivoTrue(String.valueOf(dto.diciplinas()))
-                .orElseThrow(() -> new RuntimeException("Diciplina não existente na base de dados: " + dto.diciplinas()));
-
+        List diciplinas = dcrepository.findByNomeDiciplinaAndIsAtivoTrue(String.valueOf(dto.diciplinas()));
         List<Diciplina> disciplinas = Optional.ofNullable(dto.diciplinas())
                 .orElse(List.of()) // se for null, usa lista vazia
                 .stream()
@@ -61,7 +54,7 @@ public class ProfessorService implements IProfessorService {
         Professor professor = repository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException("Id do aluno não encontrado"));
         if (dto.nome() == null || dto.nome().isBlank()) throw new ProfessorExceptions("Nome do aluno é obrigatório");
         if (dto.idade() == null || dto.idade() <= 0) throw new ProfessorExceptions("Idade do aluno deve ser maior que zero");
-        Diciplina diciplina = dcrepository.findByNomeDescricaoIsAtivoTrue(String.valueOf(dto.diciplinas())).orElseThrow(() -> new RuntimeException("Diciplina não existente: " + dto.diciplinas()));
+        List diciplina = Collections.singletonList(dcrepository.findByNomeDiciplinaAndIsAtivoTrue(String.valueOf(dto.diciplinas())).isEmpty());
         professor.setNome(dto.nome());
         professor.setIdade(dto.idade());
         professor.setDiciplina((List<Diciplina>) diciplina);

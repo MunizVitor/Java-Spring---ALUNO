@@ -2,12 +2,12 @@ package com.estudo.java.spring.CompaninVTR.Service.Diciplina;
 
 import com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO.DiciplinaRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.DiciplinaDTO.DiciplinaResponseDTO;
-import com.estudo.java.spring.CompaninVTR.Model.Aluno;
-import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
-import com.estudo.java.spring.CompaninVTR.Model.Professor;
-import com.estudo.java.spring.CompaninVTR.Repository.AlunoRepository;
-import com.estudo.java.spring.CompaninVTR.Repository.DiciplinaRepository;
-import com.estudo.java.spring.CompaninVTR.Repository.ProfessorRepository;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Aluno;
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Professor;
+import com.estudo.java.spring.CompaninVTR.Repository.Users.AlunoRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Diciplina.DiciplinaRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Users.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class DiciplinaService {
+public class DiciplinaService implements IDiciplinaService<DiciplinaRequestDTO, DiciplinaResponseDTO> {
 
     @Autowired
     private DiciplinaRepository dcRepository;
@@ -27,7 +27,8 @@ public class DiciplinaService {
     @Autowired
     private AlunoRepository alRepository;
 
-    public DiciplinaResponseDTO createDiciplina(DiciplinaRequestDTO dto) {
+    @Override
+    public DiciplinaResponseDTO save(DiciplinaRequestDTO dto) {
         // valida professor
         Professor professor = pfRepository.findByNomeAndIsAtivoTrue(dto.professor())
                 .orElseThrow(() -> new RuntimeException("Professor não encontrado ou inativo: " + dto.professor()));
@@ -51,6 +52,7 @@ public class DiciplinaService {
         return new DiciplinaResponseDTO(diciplina);
     }
 
+    @Override
     public List<DiciplinaResponseDTO> getAllDiciplina() {
         return dcRepository.findAll()
                 .stream()
@@ -58,22 +60,24 @@ public class DiciplinaService {
                 .toList();
     }
 
-    public DiciplinaResponseDTO getDiciplinaById(UUID id) {
-        Diciplina diciplina = dcRepository.findById(id)
+    @Override
+    public DiciplinaResponseDTO getDiciplinaById(String id) {
+        Diciplina diciplina = dcRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new RuntimeException("Disciplina não encontrada: " + id));
         return new DiciplinaResponseDTO(diciplina);
     }
 
+    @Override
     public List<DiciplinaResponseDTO> getDiciplinaByNome(String nomeDiciplina) {
-        return dcRepository.findByNomeDescricaoIsAtivoTrue(nomeDiciplina)
+        return dcRepository.findByNomeDiciplinaAndIsAtivoTrue(nomeDiciplina)
                 .stream()
                 .map(DiciplinaResponseDTO::new)
                 .toList();
     }
 
-
-    public DiciplinaResponseDTO updateDiciplina(UUID id, DiciplinaRequestDTO dto) {
-        Diciplina diciplina = dcRepository.findById(id)
+    @Override
+    public DiciplinaResponseDTO updateDiciplina(String id, DiciplinaRequestDTO dto) {
+        Diciplina diciplina = dcRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new RuntimeException("Disciplina não encontrada: " + id));
         diciplina.setNomeDiciplina(dto.nomeDiciplina());
         Professor professor = pfRepository.findByNomeAndIsAtivoTrue(dto.professor())
@@ -90,6 +94,11 @@ public class DiciplinaService {
         dcRepository.save(diciplina);
 
         return new DiciplinaResponseDTO(diciplina);
+    }
+
+    @Override
+    public DiciplinaResponseDTO delete(String id) {
+        return null;
     }
 
 

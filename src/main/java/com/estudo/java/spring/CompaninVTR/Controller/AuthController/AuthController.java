@@ -3,8 +3,9 @@ package com.estudo.java.spring.CompaninVTR.Controller.AuthController;
 import com.estudo.java.spring.CompaninVTR.DTO.auhtDTO.LoginRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.auhtDTO.LoginResponseDTO;
 import com.estudo.java.spring.CompaninVTR.Infra.TokenService;
-import com.estudo.java.spring.CompaninVTR.Model.User;
+import com.estudo.java.spring.CompaninVTR.Model.Users.User;
 import com.estudo.java.spring.CompaninVTR.Repository.IEntityRepository;
+import com.estudo.java.spring.CompaninVTR.Repository.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private IEntityRepository repository;
+    private UserRepository repository;
     @Autowired
     private TokenService tokenService;
 
@@ -31,8 +32,7 @@ public class AuthController {
     public ResponseEntity login(@RequestBody @Validated LoginRequestDTO dto){
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generetedToken((User)auth.getPrincipal());
-
+        var token = tokenService.generateToken((User)auth.getPrincipal());
         return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDTO(token));
     }
 }

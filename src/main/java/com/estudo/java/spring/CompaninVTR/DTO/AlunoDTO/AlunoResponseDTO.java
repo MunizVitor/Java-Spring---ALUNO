@@ -1,8 +1,7 @@
 package com.estudo.java.spring.CompaninVTR.DTO.AlunoDTO;
 
-import com.estudo.java.spring.CompaninVTR.Model.Aluno;
-import com.estudo.java.spring.CompaninVTR.Model.Diciplina;
-import com.estudo.java.spring.CompaninVTR.Model.User;
+import com.estudo.java.spring.CompaninVTR.Model.Users.Aluno;
+import com.estudo.java.spring.CompaninVTR.Model.Diciplina.Diciplina;
 
 public record AlunoResponseDTO (String nome, Integer idade, String diciplina){
     public AlunoResponseDTO(Aluno aluno, Diciplina diciplina){
