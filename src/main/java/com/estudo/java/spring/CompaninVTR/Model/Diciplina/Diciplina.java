@@ -28,7 +28,6 @@ public class Diciplina extends AbstractEntityModel {
     @JoinColumn(name = "professor_id", nullable = true)//"nulllable" e se a sua regra de negocio possa ter um campo null
     private Professor professor;
 
-    @OneToMany
-    @JoinColumn(name = "aluno_id", nullable = true)//"nulllable" e se a sua regra de negocio possa ter um campo null
-    private List<Aluno> aluno;
+    @OneToMany(mappedBy = "diciplina")
+    private List<Aluno> alunos;
 }

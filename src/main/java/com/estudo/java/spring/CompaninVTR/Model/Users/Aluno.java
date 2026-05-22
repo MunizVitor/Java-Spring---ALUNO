@@ -22,49 +22,10 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "aluno")
-public class Aluno extends User implements UserDetails {
+public class Aluno extends User {
 
     @ManyToOne
     @JoinColumn(name = "diciplina_id", nullable = false)
     private Diciplina diciplina;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private UserRole role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_PROFESSOR"), new SimpleGrantedAuthority("ROLE_ADMIN"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_ALUNO"));
-    }
-
-    @Override
-    public @Nullable String getPassword() {
-        return getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return getLogin();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

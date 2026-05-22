@@ -4,7 +4,6 @@ import com.estudo.java.spring.CompaninVTR.DTO.auhtDTO.LoginRequestDTO;
 import com.estudo.java.spring.CompaninVTR.DTO.auhtDTO.LoginResponseDTO;
 import com.estudo.java.spring.CompaninVTR.Infra.TokenService;
 import com.estudo.java.spring.CompaninVTR.Model.Users.User;
-import com.estudo.java.spring.CompaninVTR.Repository.IEntityRepository;
 import com.estudo.java.spring.CompaninVTR.Repository.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth/login")
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
@@ -28,7 +27,7 @@ public class AuthController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated LoginRequestDTO dto){
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);

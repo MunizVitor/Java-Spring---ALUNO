@@ -6,7 +6,7 @@ import java.util.List;
 
 public record DiciplinaResponseDTO(String nomeDiciplina, String professor, List<String> aluno) {
     public DiciplinaResponseDTO(Diciplina diciplina) {
-        this(diciplina.getNomeDiciplina(), diciplina.getProfessor().getNome(), diciplina.getAluno()
+        this(diciplina.getNomeDiciplina(), diciplina.getProfessor().getNome(), diciplina.getAlunos()
                 .stream()
                 .map(d -> d.getNome())
                 .toList()

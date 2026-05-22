@@ -46,7 +46,7 @@ public class DiciplinaService implements IDiciplinaService<DiciplinaRequestDTO, 
                         .orElseThrow(() -> new RuntimeException("Aluno não encontrado ou inativo: " + nomeAluno)))
                 .toList();
 
-        diciplina.setAluno(alunosValidados);
+        diciplina.setAlunos(alunosValidados);
         dcRepository.save(diciplina);
 
         return new DiciplinaResponseDTO(diciplina);
@@ -90,7 +90,7 @@ public class DiciplinaService implements IDiciplinaService<DiciplinaRequestDTO, 
                 .map(nomeAluno -> alRepository.findByNomeAndIsAtivoTrue(String.valueOf(nomeAluno))
                         .orElseThrow(() -> new RuntimeException("Aluno não encontrado ou inativo: " + nomeAluno)))
                 .toList();
-        diciplina.setAluno(alunosValidados);
+        diciplina.setAlunos(alunosValidados);
         dcRepository.save(diciplina);
 
         return new DiciplinaResponseDTO(diciplina);

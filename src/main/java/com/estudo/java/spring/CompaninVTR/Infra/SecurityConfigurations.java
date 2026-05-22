@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfigurations {
 
     @Autowired
     private SecurityFilter securityFilter;
@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
 
                         // LOGIN LIVRE
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                         // PROFESSOR
                         .requestMatchers(HttpMethod.POST, "/alunos/criar").hasRole("PROFESSOR")
@@ -59,11 +59,15 @@ public class SecurityConfig {
                 )
 
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
+
         return authenticationConfiguration.getAuthenticationManager();
     }
 
